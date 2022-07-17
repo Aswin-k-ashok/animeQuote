@@ -1,23 +1,34 @@
-import logo from './logo.svg';
 import './App.css';
+import {useState} from 'react'
+import axios from 'axios'
 
 function App() {
+const [state,setState]= useState({})
+
+let url = 'https://animechan.vercel.app/api/random'
+
+async function getQuote (){
+  const quote  = await axios.get('https://animechan.vercel.app/api/random')
+  setState(quote.data)
+  console.log(state)
+}
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <h1>
+  {state.anime}
+</h1>
+<p id="sentence" contenteditable="true" spellcheck="false">
+  {state.quote}
+  <br></br>
+  <strong style={{textAlign:'end'}}>- {state.character}</strong>
+</p>
+
+
+    <button onClick={()=>{getQuote()}} className='custom-btn btn-2'>
+      <>get your quote</>
+    </button>
+
     </div>
   );
 }
